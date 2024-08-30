@@ -13,7 +13,7 @@ user_body = {
 }
 
 #  Este diccionario contiene los datos para crear un kit de productos.
-product_kit = {
+kit_body = {
        "name": "Mi conjunto",
        "card": {
            "id": 1,
