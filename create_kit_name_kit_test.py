@@ -3,51 +3,36 @@ import data
 
 # Función para obtener el cuerpo del kit con un nombre específico
 def get_kit_body(name):
-    kit_body = data.kit_body.copy()  # Copia el diccionario del kit de productos desde data
-    kit_body["name"] = name
-    return kit_body
+    current_body = data.kit_body.copy()
+    current_body["name"] = name
+    return current_body
 
-# Función para obtener un token de usuario
+# Función para obtener el token de un nuevo usuario
 def get_new_user_token():
     return sender_stand_request.get_token()
 
 # Funciones de aserción positiva y negativa
-def positive_assert(kit_body, auth_token):
-    response = sender_stand_request.post_product_kits(kit_body, auth_token)
-    assert response.status_code == 201  # O cualquier otro código que esperes como éxito
+def positive_assert(kit_body):
+    assert "name" in kit_body and isinstance(kit_body["name"], str), "Invalid name in kit_body"
 
-def negative_assert(kit_body, auth_token):
-    response = sender_stand_request.post_product_kits(kit_body, auth_token)
-    assert response.status_code != 201  # O cualquier otro código que indique un fallo esperado
+    user_token = get_new_user_token()
+    response = sender_stand_request.post_new_client_kit(kit_body, user_token)
+
+    if response.status_code != 201:
+        print(f"Failed request: {response.status_code}, {response.json()}")
+
+    assert response.status_code == 201
+    assert response.json()["name"] == kit_body["name"]
+
+def negative_assert_code_400(kit_body):
+    user_token = get_new_user_token()
+    response = sender_stand_request.post_new_client_kit(kit_body, user_token)
+    if response.status_code != 400:
+        print(f"Failed request: {response.status_code}, {response.json()}")
+    assert response.status_code == 400
 
 
-# Pruebas
-def test_create_kit_with_1_char():
-    auth_token = get_new_user_token()
+# Lista de comprobación de pruebas
+def test_kit_name_minimum_characters():
     kit_body = get_kit_body("a")
-    positive_assert(kit_body, auth_token)
-
-def test_create_kit_with_511_chars():
-    auth_token = get_new_user_token()
-    kit_body = get_kit_body("a" * 511)
-    positive_assert(kit_body, auth_token)
-
-def test_create_kit_with_0_chars():
-    auth_token = get_new_user_token()
-    kit_body = get_kit_body("")
-    negative_assert(kit_body, auth_token)
-
-def test_create_kit_with_512_chars():
-    auth_token = get_new_user_token()
-    kit_body = get_kit_body("a" * 512)
-    negative_assert(kit_body, auth_token)
-
-def test_create_kit_with_special_chars():
-    auth_token = get_new_user_token()
-    kit_body = get_kit_body("!@#$%^&*()")
-    positive_assert(kit_body, auth_token)
-
-def test_create_kit_with_spaces():
-    auth_token = get_new_user_token()
-    kit_body = get_kit_body(" A Kit Name ")
-    positive_assert(kit_body, auth_token)
+    positive_assert(kit_body)

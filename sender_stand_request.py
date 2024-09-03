@@ -18,7 +18,7 @@ def get_token():
     return user_response.json()["authToken"]
 
 # Definir la función para enviar la solicitud POST para crear un kit de productos
-def post_product_kits(kit_body, auth_token):
+def post_new_client_kit(kit_body, auth_token):
     headers = {
         "Content-Type": "application/json",
         "Authorization": f'Bearer {auth_token}'
