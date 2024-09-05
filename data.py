@@ -12,7 +12,7 @@ user_body = {
     "address": "123 Elm Street, Hilltop"
 }
 
-#  Este diccionario contiene los datos para crear un kit de productos.
+#  Este diccionario contiene los datos para definir un kit de productos.
 kit_body = {
        "name": "Mi conjunto",
        "card": {

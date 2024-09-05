@@ -1,6 +1,7 @@
 # Nombre completo y cohorte
 Daisy Gisela Pinto, Cohorte 13
 # Proyecto Urban Grocers 
+
 ## Descripcion del proyecto
 Proyecto diseñado para automatizar pruebas en Urban Grocers
 la cual gestiona usuarios y kits de productos. Utilizamos Pytest para 
@@ -16,10 +17,10 @@ Define las funciones que envian la HTTP a la API.
 Contitn el conjunto de pruebasautomatizadas la 
 cual verifican el comportamiento de la API.
 
-## Requisitos
+## Tecnologias utilizadas
 * Python 3.7 o superior
 * pytest para ejecucion de pruebas
 * requests libreria para enviar solicitudes HTTP
 
-
-
+## Comando para ejecutar las pruebas
+pytest create_kit_name_kit_test.py
